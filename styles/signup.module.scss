@@ -1,0 +1,101 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  .sidenav {
+    min-width: 250px;
+    max-width: 251px;
+    flex-grow: 1;
+    border-right: 2px solid #e6e6e6;
+    flex-direction: column;
+    display: flex;
+    padding: 10px;
+    .logo {
+      width: 80%;
+      margin: 0 auto;
+      align-self: center;
+    }
+    h1 {
+      text-align: center;
+    }
+    .navs {
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 5px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        color: #424242;
+        text-align: left;
+        cursor: pointer;
+        border-radius: 10px;
+        &:hover,
+        &.active {
+          background: #f4f7fe;
+          color: #3367ff;
+        }
+      }
+    }
+  }
+  .main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .content {
+      padding: 10px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      h1 {
+        font-weight: 450;
+        font-size: 40px;
+      }
+      p {
+        font-size: 20px;
+        font-weight: 300;
+        margin: 10px 0px;
+        line-height: 1.5;
+      }
+      a {
+        color: var(--color-blue);
+        transition: color 0.2s, background-color 0.2s, outline-color 0.2s;
+        outline: 4px solid transparent;
+        &:hover {
+          background-color: var(--color-blue);
+          color: white;
+          outline-color: var(--color-blue);
+        }
+      }
+      br {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 2px;
+        line-height: 2px;
+      }
+    }
+    .nav {
+      padding: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      border-top: 2px solid #e6e6e6;
+      button {
+        padding: 10px 20px;
+        outline: none;
+        background-color: transparent;
+        cursor: pointer;
+        font-size: 16px;
+        border: 2px solid var(--color-blue);
+        border-radius: 10px;
+        transition: color 0.2s, background-color 0.2s, outline-color 0.2s;
+        &:hover {
+          background-color: var(--color-blue);
+          color: white;
+        }
+      }
+    }
+  }
+}
