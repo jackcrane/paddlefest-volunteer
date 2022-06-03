@@ -13,8 +13,10 @@ a {
 
 * {
   box-sizing: border-box;
+  transition: 0.2s;
 }
 
 :root {
   --color-blue: #3367ff;
+  --color-red: #fa1750;
 }

@@ -1,4 +1,5 @@
 import Input from "./Input";
+import { useState } from "react";
 
 const Signup = (props) => {
   const validateEmail = (email) => {
@@ -10,8 +11,12 @@ const Signup = (props) => {
     return re.test(phone);
   };
 
+  const [values, setValues] = useState({});
+
   const handleInput = (field, value) => {
-    localStorage.setItem(field, value);
+    const newValues = { ...values, [field]: value };
+    setValues(newValues);
+    props.setValues(newValues);
   };
 
   return (
@@ -27,13 +32,13 @@ const Signup = (props) => {
         placeholder="Your name"
         name="name"
         onInput={(text) => {
+          handleInput("name", text);
           if (text.length < 2) {
             return {
               valid: false,
               error: "Please enter your full name",
             };
           } else {
-            handleInput("name", text);
             return {
               valid: true,
               error: "",
@@ -46,6 +51,7 @@ const Signup = (props) => {
         name="email"
         type="email"
         onInput={(text) => {
+          handleInput("email", text);
           if (text.length < 2) {
             return {
               valid: false,
@@ -57,7 +63,6 @@ const Signup = (props) => {
               error: "This doesn't look like an email!",
             };
           } else {
-            handleInput("email", text);
             return {
               valid: true,
               error: "",
@@ -70,6 +75,7 @@ const Signup = (props) => {
         name="tel"
         type="tel"
         onInput={(text) => {
+          handleInput("phonenum", text);
           if (text.length < 10) {
             return {
               valid: false,
@@ -81,7 +87,6 @@ const Signup = (props) => {
               error: "This doesn't look like a phone number!",
             };
           } else {
-            handleInput("phonenum", text);
             return {
               valid: true,
               error: "",
@@ -93,6 +98,7 @@ const Signup = (props) => {
         placeholder="Your Age"
         name="age"
         onInput={(text) => {
+          handleInput("age", parseInt(text));
           if (isNaN(text)) {
             return {
               valid: false,
@@ -109,7 +115,6 @@ const Signup = (props) => {
               error: "You must be over 13 to volunteer",
             };
           } else {
-            handleInput("age", text);
             return {
               valid: true,
               error: "",
@@ -120,6 +125,7 @@ const Signup = (props) => {
       <Input
         placeholder="Shirt size"
         onInput={(text) => {
+          handleInput("shirt_size", text);
           if (text.length < 1) {
             return {
               valid: false,
@@ -133,7 +139,6 @@ const Signup = (props) => {
               error: "Shirt size invalid",
             };
           } else {
-            handleInput("age", text);
             return {
               valid: true,
               error: "",
