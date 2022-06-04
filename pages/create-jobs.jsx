@@ -19,7 +19,7 @@ const switchForDate = (date) => {
   }
 };
 
-const createJob = () => {
+const CreateJob = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [restrictions, setRestrictions] = useState({});
@@ -237,4 +237,4 @@ const createJob = () => {
     </div>
   );
 };
-export default createJob;
+export default CreateJob;
