@@ -158,7 +158,8 @@ const _jobs = [
 ];
 
 const Job = (props) => {
-  const job = props.job;
+  let job = props.job;
+  job.name = job.title;
   const [selectedShifts, setSelectedShifts] = useState([]);
 
   const handleClick = (id) => {
@@ -192,9 +193,9 @@ const Job = (props) => {
                   key={i}
                   className={classNames(
                     styles.shift,
-                    selectedShifts.includes(shift.id) && styles.selected
+                    selectedShifts.includes(shift._id) && styles.selected
                   )}
-                  onClick={() => handleClick(shift.id)}
+                  onClick={() => handleClick(shift._id)}
                 >
                   <p>
                     {moment(shift.start).format("h:mm a")} -{" "}
@@ -217,8 +218,10 @@ const Job = (props) => {
 };
 
 const EventJobs = (props) => {
+  const [eventCode, setEventCode] = useState(props.event);
   const [event, setEvent] = useState(props.event);
   useEffect(() => {
+    console.log(props.event);
     switch (props.event) {
       case "expo":
         setEvent("Outdoors for All Expo");
@@ -238,8 +241,27 @@ const EventJobs = (props) => {
   }, [props.event]);
   let __jobs = _jobs;
   const [jobs, setJobs] = useState(
-    __jobs.filter((j) => j.location === props.event)
+    // __jobs.filter((j) => j.location === props.event)
+    []
   );
+
+  useEffect(() => {
+    setJobs([]);
+    (async () => {
+      let jfetch = await fetch(
+        `https://paddlefestbackend.jackcrane.rocks/list-jobs/${props.event}`
+      );
+      if (jfetch.status !== 200) {
+        alert(
+          "Error fetching jobs. Please contact the developer at jack@jackcrane.rocks or 513-628-9360 asap so I can fix it!"
+        );
+        return;
+      } else {
+        let jobs = await jfetch.json();
+        setJobs(jobs);
+      }
+    })();
+  }, [props.event]);
 
   return (
     <div>

@@ -30,6 +30,17 @@ const createJob = () => {
   useEffect(() => console.log(shifts), [shifts]);
 
   const submit = async () => {
+    let _shifts = shifts.map((shift) => {
+      shift.start = moment(
+        `${switchForDate(location)} ${shift.start}`,
+        "M/D HH:mm"
+      ).toISOString();
+      shift.end = moment(
+        `${switchForDate(location)} ${shift.end}`,
+        "M/D HH:mm"
+      ).toISOString();
+      return shift;
+    });
     let f = await fetch("http://localhost:3001/create-job", {
       method: "POST",
       headers: {
@@ -40,7 +51,7 @@ const createJob = () => {
         description,
         restrictions,
         location,
-        shifts,
+        _shifts,
       }),
     });
     let j = await f.json();
@@ -195,12 +206,12 @@ const createJob = () => {
                 id: i,
                 start: moment(
                   `${switchForDate(location)} ${s.start}`,
-                  "M/D HH:mm"
-                ).format("M/D HH:mm"),
+                  "M/D hh:mm a"
+                ).format("M/D hh:mm a"),
                 end: moment(
                   `${switchForDate(location)} ${s.end}`,
-                  "M/D HH:mm"
-                ).format("M/D HH:mm"),
+                  "M/D hh:mm a"
+                ).format("M/D hh:mm a"),
               })),
             }}
           />
@@ -210,12 +221,12 @@ const createJob = () => {
             id: i,
             start: moment(
               `${switchForDate(location)} ${s.start}`,
-              "M/D HH:mm"
-            ).format("M/D HH:mm"),
+              "M/D hh:mm a"
+            ).format("M/D hh:mm a"),
             end: moment(
               `${switchForDate(location)} ${s.end}`,
-              "M/D HH:mm"
-            ).format("M/D HH:mm"),
+              "M/D hh:mm a"
+            ).format("M/D hh:mm a"),
           }))
         )} */}
         <hr />

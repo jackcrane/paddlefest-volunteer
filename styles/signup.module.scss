@@ -102,6 +102,40 @@ $red: #fa1750;
   }
 }
 
+@media screen and (max-width: 750px) {
+  .container {
+    .sidenav {
+      min-width: 185px;
+      max-width: 186px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    .sidenav {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      min-width: unset;
+      max-width: unset;
+      border-right: none;
+      justify-content: space-between;
+      border-bottom: 2px solid #e6e6e6;
+      padding: 20px 30px;
+      align-items: center;
+      flex-grow: unset;
+      img {
+        height: 70px;
+      }
+      .navs {
+        display: none;
+      }
+    }
+  }
+}
+
 .options {
   display: flex;
   flex-direction: row;

@@ -4,7 +4,7 @@ const Signup = (props) => {
       <h1>Thank you for signing up to be a volunteer with Paddlefest!</h1>
       <p>Paddlefest’s success is thanks to our amazing team of volunteers.</p>
       <p>
-        Whether you’re an individual or a part or a corporate group, you can
+        Whether you’re an individual or a part of a corporate group, you can
         make a huge impact on Paddlefest.
       </p>
       <p>
