@@ -104,15 +104,6 @@ $red: #fa1750;
 
 @media screen and (max-width: 750px) {
   .container {
-    .sidenav {
-      min-width: 185px;
-      max-width: 186px;
-    }
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .container {
     flex-direction: column;
     .sidenav {
       display: flex;
