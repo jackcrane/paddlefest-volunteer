@@ -39,9 +39,9 @@ const Locs = ({ volunteer, jobs, forceUpdate }) => {
 
   return (
     <>
-      {Object.keys(jobs).map((loc) => {
+      {Object.keys(jobs).map((loc, i) => {
         return (
-          <details>
+          <details key={i}>
             <summary>{switchForLocation(loc)}</summary>
             {Object.keys(jobs[loc]).map((job) => (
               <Job volunteer={volunteer} job={job} forceUpdate={forceUpdate} />
@@ -161,8 +161,9 @@ const AvailibleShifts = (props) => {
   }
   return (
     <div className={styles.addShifts}>
-      {shifts.map((shift) => (
+      {shifts.map((shift, i) => (
         <ShiftOption
+          key={i}
           volunteer={props.volunteer}
           shift={shift}
           forceUpdate={props.forceUpdate}
@@ -237,9 +238,9 @@ const Shifts = (props) => {
                 <td>Other volunteers</td>
                 <td>
                   {shift.volunteers.map(
-                    (volunteer) =>
+                    (volunteer, i) =>
                       volunteer !== props.volunteer && (
-                        <VolunteerForName volunteer={volunteer} />
+                        <VolunteerForName key={i} volunteer={volunteer} />
                       )
                   )}
                 </td>

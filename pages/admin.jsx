@@ -80,9 +80,9 @@ const Admin = () => {
             </tr>
           </thead>
           <tbody>
-            {volunteers.map((volunteer) => (
+            {volunteers.map((volunteer, i) => (
               <tr
-                key={volunteer._id}
+                key={i}
                 onClick={() => {
                   setModal(volunteer._id);
                   setModalOpen(true);
