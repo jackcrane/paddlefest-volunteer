@@ -5,6 +5,7 @@ import Start from "../components/Start";
 import BasicInfo from "../components/BasicInfo";
 import Jobs from "../components/Jobs";
 import Dates from "../components/Dates";
+import Loader from "../components/Loader";
 
 const Page = (props) => {
   const [activePage, setActivePage] = useState(0);
@@ -126,7 +127,7 @@ const Page = (props) => {
               Make sure you have everything correct, then click submit below! We
               will email you a copy of your responses.
             </p>
-            <button onClick={submit}>Submit!</button>
+            {working ? <Loader /> : <button onClick={submit}>Submit!</button>}
           </div>
         </div>
         <div className={styles.nav}>
