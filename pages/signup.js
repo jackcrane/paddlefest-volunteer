@@ -43,7 +43,7 @@ const Page = (props) => {
       return;
     }
 
-    let f = await fetch("http://localhost:3001/signup", {
+    let f = await fetch("https://paddlefestbackend.jackcrane.rocks/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
