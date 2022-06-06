@@ -11,6 +11,57 @@ const Page = (props) => {
 
   const [_basicInfo, set_BasicInfo] = useState({});
   const [events, setEvents] = useState([]);
+  const [jobs, setJobs] = useState([]);
+
+  const [working, setWorking] = useState(false);
+
+  const submit = async () => {
+    setWorking(true);
+
+    // Verify everything is filled out
+    if (
+      !_basicInfo.name ||
+      !_basicInfo.email ||
+      !_basicInfo.phonenum ||
+      !_basicInfo.age ||
+      !_basicInfo.shirt_size
+    ) {
+      alert("Please fill out all fields");
+      setWorking(false);
+      setActivePage(1);
+      return;
+    }
+    if (events.length === 0) {
+      alert("Please select at least one event");
+      setWorking(false);
+      setActivePage(2);
+      return;
+    }
+    if (jobs.length === 0) {
+      alert("Please select at least one and shift");
+      setWorking(false);
+      setActivePage(3);
+      return;
+    }
+
+    let f = await fetch("http://localhost:3001/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        basicInfo: _basicInfo,
+        jobs: jobs,
+      }),
+    });
+    let res = await f.json();
+    setWorking(false);
+    if (f.status === 200) {
+      document.location.href = "/thanks";
+    } else {
+      alert("Something went wrong. Make sure everything is present!");
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -48,6 +99,12 @@ const Page = (props) => {
           >
             Job selection
           </button>
+          <button
+            onClick={() => setActivePage(4)}
+            className={activePage == 3 ? styles.active : undefined}
+          >
+            Submit
+          </button>
         </div>
       </nav>
       <main className={styles.main}>
@@ -62,7 +119,15 @@ const Page = (props) => {
             <Dates setValues={(v) => setEvents(v)} />
           </div>
           <div style={{ display: activePage == 3 ? "initial" : "none" }}>
-            <Jobs events={events} />
+            <Jobs events={events} setValues={(v) => setJobs(v)} />
+          </div>
+          <div style={{ display: activePage == 4 ? "initial" : "none" }}>
+            <h1>Finished?</h1>
+            <p>
+              Make sure you have everything correct, then click submit below! We
+              will email you a copy of your responses.
+            </p>
+            <button onClick={submit}>Submit!</button>
           </div>
         </div>
         <div className={styles.nav}>
@@ -72,7 +137,7 @@ const Page = (props) => {
             Back
           </button>
           <button
-            onClick={() => activePage <= 5 && setActivePage(activePage + 1)}
+            onClick={() => activePage <= 3 && setActivePage(activePage + 1)}
           >
             Next
           </button>

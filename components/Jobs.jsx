@@ -170,6 +170,10 @@ const Job = (props) => {
     }
   };
 
+  useEffect(() => {
+    props.handle(selectedShifts);
+  }, [selectedShifts]);
+
   return (
     <div className={styles.job}>
       <div className={styles.title}>
@@ -188,21 +192,24 @@ const Job = (props) => {
           <summary className={styles.summary}>View Shifts</summary>
           <div className={styles.shifts}>
             {job.shifts ? (
-              job.shifts.map((shift, i) => (
-                <div
-                  key={i}
-                  className={classNames(
-                    styles.shift,
-                    selectedShifts.includes(shift._id) && styles.selected
-                  )}
-                  onClick={() => handleClick(shift._id)}
-                >
-                  <p>
-                    {moment(shift.start).format("h:mm a")} -{" "}
-                    {moment(shift.end).format("h:mm a")}
-                  </p>
-                </div>
-              ))
+              job.shifts.map(
+                (shift, i) =>
+                  shift.volunteers.length <= shift.max && (
+                    <div
+                      key={i}
+                      className={classNames(
+                        styles.shift,
+                        selectedShifts.includes(shift._id) && styles.selected
+                      )}
+                      onClick={() => handleClick(shift._id)}
+                    >
+                      <p>
+                        {moment(shift.start).format("h:mm a")} -{" "}
+                        {moment(shift.end).format("h:mm a")}
+                      </p>
+                    </div>
+                  )
+              )
             ) : (
               <p>No shifts availible for this job</p>
             )}
@@ -221,7 +228,6 @@ const EventJobs = (props) => {
   const [eventCode, setEventCode] = useState(props.event);
   const [event, setEvent] = useState(props.event);
   useEffect(() => {
-    console.log(props.event);
     switch (props.event) {
       case "expo":
         setEvent("Outdoors for All Expo");
@@ -263,12 +269,24 @@ const EventJobs = (props) => {
     })();
   }, [props.event]);
 
+  const [selectedJobs, setSelectedJobs] = useState({});
+
+  const handle = (shift, _id) => {
+    setSelectedJobs({
+      ...selectedJobs,
+      [_id]: shift,
+    });
+  };
+  useEffect(() => {
+    props.handle(selectedJobs);
+  }, [selectedJobs]);
+
   return (
     <div>
       <h2>{event}</h2>
       <div className={styles.jobList}>
         {jobs.map((job, i) => (
-          <Job key={i} job={job} />
+          <Job key={i} job={job} handle={(d) => handle(d, job._id)} />
         ))}
       </div>
     </div>
@@ -276,6 +294,17 @@ const EventJobs = (props) => {
 };
 
 const Signup = (props) => {
+  const [selectedJobs, setSelectedJobs] = useState({});
+  const handle = (job, _id) => {
+    setSelectedJobs({
+      ...selectedJobs,
+      [_id]: job,
+    });
+  };
+  useEffect(() => {
+    props.setValues(selectedJobs);
+  }, [selectedJobs]);
+
   return (
     <div>
       <h1>Select a job and time</h1>
@@ -293,7 +322,7 @@ const Signup = (props) => {
         </p>
       )}
       {props.events.map((e, i) => (
-        <EventJobs key={i} event={e} />
+        <EventJobs key={i} event={e} handle={(d) => handle(d, e)} />
       ))}
     </div>
   );

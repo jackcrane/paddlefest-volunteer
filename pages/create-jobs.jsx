@@ -30,7 +30,8 @@ const CreateJob = () => {
   useEffect(() => console.log(shifts), [shifts]);
 
   const submit = async () => {
-    let _shifts = shifts.map((shift) => {
+    let _shifts = Object.keys(shifts).map((_shift) => {
+      let shift = shifts[_shift];
       shift.start = moment(
         `${switchForDate(location)} ${shift.start}`,
         "M/D HH:mm"
@@ -51,7 +52,7 @@ const CreateJob = () => {
         description,
         restrictions,
         location,
-        _shifts,
+        shifts: _shifts,
       }),
     });
     let j = await f.json();
@@ -194,10 +195,12 @@ const CreateJob = () => {
             ))}
           </div>
         )}
-        <hr />
+        {/* <hr />
         <h2>This is how the listing will look</h2>
         <div className={styles.jobList}>
           <Job
+            IGNORE={true}
+            handle={() => {}}
             job={{
               name: title,
               description,
@@ -215,7 +218,7 @@ const CreateJob = () => {
               })),
             }}
           />
-        </div>
+        </div> */}
         {/* {JSON.stringify(
           Object.values(shifts).map((s, i) => ({
             id: i,
