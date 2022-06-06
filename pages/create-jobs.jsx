@@ -42,19 +42,22 @@ const CreateJob = () => {
       ).toISOString();
       return shift;
     });
-    let f = await fetch("http://localhost:3001/create-job", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        restrictions,
-        location,
-        shifts: _shifts,
-      }),
-    });
+    let f = await fetch(
+      "https://paddlefestbackend.jackcrane/rocks/create-job",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          restrictions,
+          location,
+          shifts: _shifts,
+        }),
+      }
+    );
     let j = await f.json();
     if (f.status === 200) {
       alert("Job created!");
