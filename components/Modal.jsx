@@ -60,7 +60,7 @@ const Job = (props) => {
     (async () => {
       console.log(props.job);
       let f = await fetch(
-        `https://paddlefestbackend.jackcrane/rocks/jobs/exchange/job/${props.job}`
+        `https://paddlefestbackend.jackcrane.rocks/jobs/exchange/job/${props.job}`
       );
       let job = await f.json();
       setJob(job);
@@ -91,7 +91,7 @@ const VolunteerForName = (props) => {
   useEffect(() => {
     (async () => {
       let f = await fetch(
-        `https://paddlefestbackend.jackcrane/rocks/volunteer/${props.volunteer}`
+        `https://paddlefestbackend.jackcrane.rocks/volunteer/${props.volunteer}`
       );
       let volunteer = await f.json();
 
@@ -111,7 +111,7 @@ const VolunteerForName = (props) => {
 
 const ShiftOption = ({ shift, volunteer, forceUpdate }) => {
   const submit = async () => {
-    let f = await fetch(`https://paddlefestbackend.jackcrane/rocks/add-shift`, {
+    let f = await fetch(`https://paddlefestbackend.jackcrane.rocks/add-shift`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -149,7 +149,7 @@ const AvailibleShifts = (props) => {
   useEffect(() => {
     (async () => {
       let f = await fetch(
-        `https://paddlefestbackend.jackcrane/rocks/jobs/exchange/job/${props.job}`
+        `https://paddlefestbackend.jackcrane.rocks/jobs/exchange/job/${props.job}`
       );
       let shifts = await f.json();
       setShifts(shifts.shifts);
@@ -178,7 +178,7 @@ const Shifts = (props) => {
   useEffect(() => {
     (async () => {
       let f = await fetch(
-        `https://paddlefestbackend.jackcrane/rocks/shifts/${props.volunteer}/${props.job}`
+        `https://paddlefestbackend.jackcrane.rocks/shifts/${props.volunteer}/${props.job}`
       );
       let shifts = await f.json();
       setShifts(shifts);
@@ -198,7 +198,7 @@ const Shifts = (props) => {
       ) {
         console.log(shift);
         let f = await fetch(
-          `https://paddlefestbackend.jackcrane/rocks/remove-shift`,
+          `https://paddlefestbackend.jackcrane.rocks/remove-shift`,
           {
             method: "POST",
             headers: {
@@ -273,7 +273,7 @@ const Modal = ({ open, onClose, _id }) => {
     (async () => {
       setWorking(true);
       let f = await fetch(
-        `https://paddlefestbackend.jackcrane/rocks/volunteer/${_id}`
+        `https://paddlefestbackend.jackcrane.rocks/volunteer/${_id}`
       );
       let volunteer = await f.json();
       setVolunteer(volunteer);
@@ -289,7 +289,7 @@ const Modal = ({ open, onClose, _id }) => {
         )
       ) {
         let f = await fetch(
-          `https://paddlefestbackend.jackcrane/rocks/delete-volunteer`,
+          `https://paddlefestbackend.jackcrane.rocks/delete-volunteer`,
           {
             method: "POST",
             headers: {

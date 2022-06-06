@@ -25,7 +25,7 @@ const Admin = () => {
   useEffect(() => {
     (async () => {
       let f = await fetch(
-        "https://paddlefestbackend.jackcrane/rocks/volunteers"
+        "https://paddlefestbackend.jackcrane.rocks/volunteers"
       );
       let volunteers = await f.json();
       setVolunteers(volunteers);

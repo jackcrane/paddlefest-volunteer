@@ -43,7 +43,7 @@ const CreateJob = () => {
       return shift;
     });
     let f = await fetch(
-      "https://paddlefestbackend.jackcrane/rocks/create-job",
+      "https://paddlefestbackend.jackcrane.rocks/create-job",
       {
         method: "POST",
         headers: {
