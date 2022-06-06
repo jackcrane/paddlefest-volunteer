@@ -43,8 +43,13 @@ const Locs = ({ volunteer, jobs, forceUpdate }) => {
         return (
           <details key={i}>
             <summary>{switchForLocation(loc)}</summary>
-            {Object.keys(jobs[loc]).map((job) => (
-              <Job volunteer={volunteer} job={job} forceUpdate={forceUpdate} />
+            {Object.keys(jobs[loc]).map((job, i) => (
+              <Job
+                volunteer={volunteer}
+                key={i}
+                job={job}
+                forceUpdate={forceUpdate}
+              />
             ))}
           </details>
         );
