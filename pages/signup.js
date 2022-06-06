@@ -23,7 +23,6 @@ const Page = (props) => {
       !_basicInfo.name ||
       !_basicInfo.email ||
       !_basicInfo.phonenum ||
-      !_basicInfo.age ||
       !_basicInfo.shirt_size
     ) {
       alert("Please fill out all fields");
@@ -101,7 +100,7 @@ const Page = (props) => {
           </button>
           <button
             onClick={() => setActivePage(4)}
-            className={activePage == 3 ? styles.active : undefined}
+            className={activePage == 4 ? styles.active : undefined}
           >
             Submit
           </button>

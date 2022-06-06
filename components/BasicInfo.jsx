@@ -95,34 +95,6 @@ const Signup = (props) => {
         }}
       />
       <Input
-        placeholder="Your Age"
-        name="age"
-        onInput={(text) => {
-          handleInput("age", parseInt(text));
-          if (isNaN(text)) {
-            return {
-              valid: false,
-              error: "Age must be a number",
-            };
-          } else if (text.length < 1) {
-            return {
-              valid: false,
-              error: "Please enter your age",
-            };
-          } else if (parseInt(text) < 13) {
-            return {
-              valid: false,
-              error: "You must be over 13 to volunteer",
-            };
-          } else {
-            return {
-              valid: true,
-              error: "",
-            };
-          }
-        }}
-      />
-      <Input
         placeholder="Shirt size"
         onInput={(text) => {
           handleInput("shirt_size", text);
