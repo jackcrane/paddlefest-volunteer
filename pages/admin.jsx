@@ -39,14 +39,13 @@ const Admin = () => {
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} _id={modal} />
       <nav>
         <h1>Volunteer Listing</h1>
-        <div className={styles.navs}>
+        {/* <div className={styles.navs}>
           <button>Volunteers</button>
           <button>Jobs</button>
         </div>
         <div className={styles.search}>
-          {/* <input type="text" placeholder="Search" /> */}
           <Input placeholder="Search" onInput={() => {}} />
-        </div>
+        </div> */}
       </nav>
       <main>
         <h1>Volunteers</h1>
