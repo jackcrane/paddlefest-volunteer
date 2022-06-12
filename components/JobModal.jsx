@@ -75,6 +75,7 @@ const JobModal = ({ open, onClose, _id, openVolunteer }) => {
         );
         let volunteer = await f.json();
         setJob(volunteer);
+        await new Promise((r) => setTimeout(r, 500));
         setWorking(false);
       }
     })();
