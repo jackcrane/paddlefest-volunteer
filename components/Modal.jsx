@@ -315,8 +315,10 @@ const Modal = ({ open, onClose, _id }) => {
   };
 
   const [changeSaved, setChangeSaved] = useState("");
+  const [notes, setNotes] = useState(volunteer.notes);
   const handleNotesChange = async (e) => {
     setChangeSaved("Saving...");
+    setNotes(e.target.value);
     let f = await fetch(
       "https://paddlefestbackend.jackcrane.rocks/update-notes",
       {
@@ -396,7 +398,7 @@ const Modal = ({ open, onClose, _id }) => {
                       <td>Notes</td>
                       <td>
                         <textarea
-                          value={volunteer.notes || ""}
+                          value={notes || ""}
                           onInput={handleNotesChange}
                         />
                       </td>
