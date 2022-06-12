@@ -170,7 +170,7 @@ const JobModal = ({ open, onClose, _id, openVolunteer }) => {
                     </thead>
                     <tbody>
                       {job.shifts.map((shift, i) => (
-                        <tr>
+                        <tr key={i}>
                           <td>
                             {moment(shift.start).format("h:mm a")} -{" "}
                             {moment(shift.end).format("h:mm a")}
