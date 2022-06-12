@@ -283,6 +283,7 @@ const Modal = ({ open, onClose, _id }) => {
       );
       let volunteer = await f.json();
       setVolunteer(volunteer);
+      await new Promise((r) => setTimeout(r, 500));
       setWorking(false);
     })();
   }, [_id, updateTick]);
@@ -401,8 +402,14 @@ const Modal = ({ open, onClose, _id }) => {
                         <textarea
                           value={notes || ""}
                           onInput={handleNotesChange}
+                          style={{
+                            width: "100%",
+                            height: 100,
+                            fontFamily: "inherit",
+                            fontSize: 16,
+                          }}
                         />
-                        <p>{changeSaved}</p>
+                        <p style={{ margin: 0 }}>{changeSaved}</p>
                       </td>
                     </tr>
                   </tbody>
