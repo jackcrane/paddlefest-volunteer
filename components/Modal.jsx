@@ -314,6 +314,29 @@ const Modal = ({ open, onClose, _id }) => {
     })();
   };
 
+  const [changeSaved, setChangeSaved] = useState("");
+  const handleNotesChange = async (e) => {
+    setChangeSaved("Saving...");
+    let f = await fetch(
+      "https://paddlefestbackend.jackcrane.rocks/update-notes",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: _id,
+          notes: e.target.value,
+        }),
+      }
+    );
+    if (f.status === 200) {
+      setChangeSaved("Changes saved");
+    } else {
+      setChangeSaved("Error saving changes");
+    }
+  };
+
   return open ? (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
@@ -367,6 +390,15 @@ const Modal = ({ open, onClose, _id }) => {
                       <td>Volunteer ID number</td>
                       <td>
                         <code>{_id}</code>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Notes</td>
+                      <td>
+                        <textarea
+                          value={volunteer.notes || ""}
+                          onInput={handleNotesChange}
+                        />
                       </td>
                     </tr>
                   </tbody>
