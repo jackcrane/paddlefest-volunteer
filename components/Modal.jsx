@@ -316,6 +316,7 @@ const Modal = ({ open, onClose, _id }) => {
 
   const [changeSaved, setChangeSaved] = useState("");
   const [notes, setNotes] = useState(volunteer.notes);
+  useEffect(() => setNotes(volunteer.notes), [volunteer.notes]);
   const handleNotesChange = async (e) => {
     setChangeSaved("Saving...");
     setNotes(e.target.value);
@@ -401,6 +402,7 @@ const Modal = ({ open, onClose, _id }) => {
                           value={notes || ""}
                           onInput={handleNotesChange}
                         />
+                        <p>{changeSaved}</p>
                       </td>
                     </tr>
                   </tbody>
