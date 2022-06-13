@@ -79,7 +79,10 @@ const EventJobs = (props) => {
         setEvent("Outdoors for All Expo");
         break;
       case "putin":
-        setEvent("Put-in");
+        setEvent("Launch");
+        break;
+      case "launch":
+        return "Launch";
         break;
       case "midpoint":
         setEvent("4.5 Mile Finish Line / Midpoint");

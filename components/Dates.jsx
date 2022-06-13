@@ -34,7 +34,7 @@ const Option = (props) => {
 
 const Dates = (props) => {
   const [outdoorsForAll, setOutdoorsForAll] = useState(false);
-  const [putIn, setPutIn] = useState(false);
+  const [launch, setLaunch] = useState(false);
   const [midPoint, setMidPoint] = useState(false);
   const [finishLine, setFinishLine] = useState(false);
 
@@ -43,13 +43,13 @@ const Dates = (props) => {
   useEffect(() => {
     const newValues = [
       outdoorsForAll && "expo",
-      putIn && "putin",
+      launch && "launch",
       midPoint && "midpoint",
       finishLine && "finishline",
     ].filter((itm) => itm);
     setValues(newValues);
     props.setValues(newValues);
-  }, [outdoorsForAll, putIn, midPoint, finishLine]);
+  }, [outdoorsForAll, launch, midPoint, finishLine]);
 
   return (
     <div>
@@ -70,7 +70,7 @@ const Dates = (props) => {
           <p className={styles.bigdate}>Outdoors for All Expo</p>
           <p>Friday night (August 5th)</p>
         </Option>
-        <Option checked={putIn} onLocalChange={() => setPutIn(!putIn)}>
+        <Option checked={launch} onLocalChange={() => setLaunch(!launch)}>
           <p>Schmidt Field</p>
           <p className={styles.bigdate}>Put-in</p>
           <p>Saturday early morning (August 6th)</p>

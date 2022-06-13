@@ -10,6 +10,9 @@ const switchForDate = (date) => {
       return "8/5";
     case "putin":
       return "8/6";
+    case "launch":
+      return "8/6";
+      break;
     case "midpoint":
       return "8/6";
     case "finishline":
@@ -73,10 +76,10 @@ const CreateJob = () => {
       <Input placeholder="Job Title" onInput={setTitle} />
       <Input placeholder="Job Description" onInput={setDescription} />
       <Input
-        placeholder="Job Location (options are 'expo', 'putin', 'midpoint', 'finishline')"
+        placeholder="Job Location (options are 'expo', 'launch', 'midpoint', 'finishline')"
         onInput={(value) => {
           setLocation(value);
-          if (["expo", "putin", "midpoint", "finishline"].includes(value)) {
+          if (["expo", "launch", "midpoint", "finishline"].includes(value)) {
             return {
               valid: true,
               error: "",
@@ -88,13 +91,13 @@ const CreateJob = () => {
             };
           }
         }}
-        dataList={["expo", "putin", "midpoint", "finishline"]}
+        dataList={["expo", "launch", "midpoint", "finishline"]}
         helperText="Only use the listed locations as it is how jobs are sorted"
       />
       <hr />
       <p
         style={{
-          display: !["expo", "putin", "midpoint", "finishline"].includes(
+          display: !["expo", "launch", "midpoint", "finishline"].includes(
             location
           )
             ? "initial"
@@ -105,7 +108,7 @@ const CreateJob = () => {
       </p>
       <div
         style={{
-          display: ["expo", "putin", "midpoint", "finishline"].includes(
+          display: ["expo", "launch", "midpoint", "finishline"].includes(
             location
           )
             ? "initial"
