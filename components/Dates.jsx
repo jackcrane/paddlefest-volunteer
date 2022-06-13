@@ -72,7 +72,7 @@ const Dates = (props) => {
         </Option>
         <Option checked={launch} onLocalChange={() => setLaunch(!launch)}>
           <p>Schmidt Field</p>
-          <p className={styles.bigdate}>Put-in</p>
+          <p className={styles.bigdate}>Launch</p>
           <p>Saturday early morning (August 6th)</p>
         </Option>
         <Option checked={midPoint} onLocalChange={() => setMidPoint(!midPoint)}>
