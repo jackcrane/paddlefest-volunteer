@@ -120,6 +120,38 @@ const Signup = (props) => {
         dataList={["XS", "S", "M", "L", "XL", "XXL"]}
         helperText="Shirt sizes are: 'XS', 'S', 'M', 'L', 'XL', 'XXL'"
       />
+      <Input
+        placeholder="How did you hear about Paddlefest?"
+        dataList={[
+          "Returning volunteer",
+          "Past participant, Friend/family member",
+          "Social media",
+          "Paddlefest website",
+          "Radio",
+          "Other (please specify)",
+        ]}
+        onInput={(text) => {
+          handleInput("heard_about", text);
+          if (text.length < 1) {
+            return {
+              valid: false,
+              error: "How did you hear about Paddlefest?",
+            };
+          }
+          if (text === "Other (please specify)") {
+            return {
+              valid: false,
+              error: "Please specify",
+            };
+          } else {
+            return {
+              valid: true,
+              error: "",
+            };
+          }
+        }}
+        helperText="Select one from the dropdown or enter your own"
+      />
     </div>
   );
 };

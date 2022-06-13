@@ -35,13 +35,15 @@ const Admin = () => {
       );
       let volunteers = await f.json();
       setVolunteers(volunteers);
+      console.log("Volunteers updated");
     })();
   }, [updateTick]);
 
   useEffect(() => {
-    setInterval(() => {
+    const si = setInterval(() => {
       setUpdateTick(updateTick + 1);
     }, 1000);
+    return () => clearInterval(si);
   }, []);
 
   const [modal, setModal] = useState("");
@@ -55,6 +57,7 @@ const Admin = () => {
       let f = await fetch(`https://paddlefestbackend.jackcrane.rocks/jobs`);
       let jobs = await f.json();
       setJobs(jobs);
+      console.log("Jobs updated");
     })();
   }, [updateTick]);
 

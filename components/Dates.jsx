@@ -66,27 +66,27 @@ const Dates = (props) => {
           checked={outdoorsForAll}
           onLocalChange={() => setOutdoorsForAll(!outdoorsForAll)}
         >
-          <p>Schmidt Field</p>
-          <p className={styles.bigdate}>Outdoors for All Expo</p>
           <p>Friday night (August 5th)</p>
+          <p className={styles.bigdate}>Outdoors for All Expo</p>
+          <p>Schmidt Field</p>
         </Option>
         <Option checked={launch} onLocalChange={() => setLaunch(!launch)}>
-          <p>Schmidt Field</p>
-          <p className={styles.bigdate}>Launch</p>
           <p>Saturday early morning (August 6th)</p>
+          <p className={styles.bigdate}>Launch</p>
+          <p>Schmidt Field</p>
         </Option>
         <Option checked={midPoint} onLocalChange={() => setMidPoint(!midPoint)}>
-          <p>Public Landing (downtown)</p>
-          <p className={styles.bigdate}>4.5 Mile Finish Line / Midpoint</p>
           <p>Saturday day (August 6th)</p>
+          <p className={styles.bigdate}>4.5 Mile Finish Line / Midpoint</p>
+          <p>Public Landing (downtown)</p>
         </Option>
         <Option
           checked={finishLine}
           onLocalChange={() => setFinishLine(!finishLine)}
         >
-          <p>Gilday Park</p>
-          <p className={styles.bigdate}>Finish Line Festival</p>
           <p>Saturday day (August 6th)</p>
+          <p className={styles.bigdate}>Finish Line Festival</p>
+          <p>Gilday Park</p>
         </Option>
         {midPoint && finishLine && (
           <p className={styles.error}>

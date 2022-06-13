@@ -17,9 +17,10 @@ const Signup = (props) => {
         </a>
       </p>
       <p>
-        Your information is kept within Paddlefest. We will not sell or
-        distribute anything. Please provide us with accurate information so we
-        can contact you about your volunteer commitment.
+        Your information is kept within Adventure Crew, the nonprofit organizer
+        and beneficiary of Paddlefest. We will not sell or distribute anything.
+        Please provide us with accurate information so we can contact you about
+        your volunteer commitment.
       </p>
       <p>
         <b>

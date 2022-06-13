@@ -400,6 +400,10 @@ const Modal = ({ open, onClose, _id }) => {
                       </td>
                     </tr>
                     <tr>
+                      <td>How'd you hear about Paddlefest</td>
+                      <td>{volunteer.heard_about || "Data does not exist"}</td>
+                    </tr>
+                    <tr>
                       <td>Notes</td>
                       <td>
                         <textarea

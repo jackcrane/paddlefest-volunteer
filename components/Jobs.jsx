@@ -38,24 +38,34 @@ const Job = (props) => {
           <summary className={styles.summary}>View Shifts</summary>
           <div className={styles.shifts}>
             {job.shifts ? (
-              job.shifts.map(
-                (shift, i) =>
-                  shift.volunteers.length <= shift.max && (
-                    <div
-                      key={i}
-                      className={classNames(
-                        styles.shift,
-                        selectedShifts.includes(shift._id) && styles.selected
-                      )}
-                      onClick={() => handleClick(shift._id)}
-                    >
-                      <p>
-                        {moment(shift.start).format("h:mm a")} -{" "}
-                        {moment(shift.end).format("h:mm a")}
-                      </p>
-                    </div>
-                  )
-              )
+              <>
+                {job.shifts.map(
+                  (shift, i) =>
+                    shift.volunteers.length < shift.max && (
+                      <div
+                        key={i}
+                        className={classNames(
+                          styles.shift,
+                          selectedShifts.includes(shift._id) && styles.selected
+                        )}
+                        onClick={() => handleClick(shift._id)}
+                      >
+                        <p>
+                          {moment(shift.start).format("h:mm a")} -{" "}
+                          {moment(shift.end).format("h:mm a")}
+                        </p>
+                      </div>
+                    )
+                )}
+                {job.shifts.filter(
+                  (shift) => shift.volunteers.length >= shift.max
+                ).length > 0 && (
+                  <p>
+                    One or more shifts are full and have been automatically
+                    hidden.
+                  </p>
+                )}
+              </>
             ) : (
               <p>No shifts availible for this job</p>
             )}
