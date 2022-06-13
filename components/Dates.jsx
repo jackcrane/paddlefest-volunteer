@@ -53,13 +53,14 @@ const Dates = (props) => {
 
   return (
     <div>
-      <h1>When and where do you want to work?</h1>
+      <h1>When and where do you want to volunteer?</h1>
       <p>
-        Select the events you want to work. You can select multiple, but
-        remember you can't work at different places at the same time (You cannot
-        do both 4.5 Mile Finish Line / Midpoint AND the Finish Line Festival).
-        You will select the role you want to play and the specific times you are
-        availible on the next page.
+        Please select from the list of Paddlefest events below, then click
+        “next.” You can select multiple events and venues as long as they don’t
+        conflict timewise. (For example, you cannot volunteer at both the 4.5
+        Mile Finish Line/Midpoint AND the Finish Line Festival because they
+        happen simultaneously.) After selecting from the events below, you will
+        see available roles and shifts on the next page.
       </p>
       <div className={styles.options}>
         <Option
@@ -68,16 +69,18 @@ const Dates = (props) => {
         >
           <p>Friday night (August 5th)</p>
           <p className={styles.bigdate}>Outdoors for All Expo</p>
-          <p>Schmidt Field</p>
+          <p>Schmidt Recreation Complex</p>
         </Option>
         <Option checked={launch} onLocalChange={() => setLaunch(!launch)}>
           <p>Saturday early morning (August 6th)</p>
-          <p className={styles.bigdate}>Launch</p>
-          <p>Schmidt Field</p>
+          <p className={styles.bigdate}>Paddlefest Launch</p>
+          <p>Schmidt Recreation Complex</p>
         </Option>
         <Option checked={midPoint} onLocalChange={() => setMidPoint(!midPoint)}>
           <p>Saturday day (August 6th)</p>
-          <p className={styles.bigdate}>4.5 Mile Finish Line / Midpoint</p>
+          <p className={styles.bigdate}>
+            4.5 Mile Finish Line / 9.0 Mile Midpoint
+          </p>
           <p>Public Landing (downtown)</p>
         </Option>
         <Option
@@ -85,7 +88,7 @@ const Dates = (props) => {
           onLocalChange={() => setFinishLine(!finishLine)}
         >
           <p>Saturday day (August 6th)</p>
-          <p className={styles.bigdate}>Finish Line Festival</p>
+          <p className={styles.bigdate}>9.0 Mile Finish Line Festival</p>
           <p>Gilday Park</p>
         </Option>
         {midPoint && finishLine && (
