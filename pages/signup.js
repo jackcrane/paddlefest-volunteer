@@ -6,6 +6,7 @@ import BasicInfo from "../components/BasicInfo";
 import Jobs from "../components/Jobs";
 import Dates from "../components/Dates";
 import Loader from "../components/Loader";
+import Waiver from "../components/Waiver";
 
 const Page = (props) => {
   const [activePage, setActivePage] = useState(0);
@@ -13,6 +14,8 @@ const Page = (props) => {
   const [_basicInfo, set_BasicInfo] = useState({});
   const [events, setEvents] = useState([]);
   const [jobs, setJobs] = useState([]);
+
+  const [waiver, setWaiver] = useState({});
 
   const [working, setWorking] = useState(false);
 
@@ -43,6 +46,18 @@ const Page = (props) => {
       setActivePage(3);
       return;
     }
+    if (
+      [
+        waiverType == "Adult" || "Minor",
+        emergencyName.length > 0,
+        emergencyPhone.length > 0,
+        emergencyRelationship.length > 0,
+      ].some((x) => x === false)
+    ) {
+      alert("Please fill out all waiver fields");
+      setWorking(false);
+      setActivePage(4);
+    }
 
     let f = await fetch("https://paddlefestbackend.jackcrane.rocks/signup", {
       method: "POST",
@@ -52,6 +67,7 @@ const Page = (props) => {
       body: JSON.stringify({
         basicInfo: _basicInfo,
         jobs: jobs,
+        waiver,
       }),
     });
     let res = await f.json();
@@ -103,6 +119,12 @@ const Page = (props) => {
             onClick={() => setActivePage(4)}
             className={activePage == 4 ? styles.active : undefined}
           >
+            Waiver
+          </button>
+          <button
+            onClick={() => setActivePage(5)}
+            className={activePage == 5 ? styles.active : undefined}
+          >
             Submit
           </button>
         </div>
@@ -122,6 +144,9 @@ const Page = (props) => {
             <Jobs events={events} setValues={(v) => setJobs(v)} />
           </div>
           <div style={{ display: activePage == 4 ? "initial" : "none" }}>
+            <Waiver setValues={(v) => setWaiver(v)} />
+          </div>
+          <div style={{ display: activePage == 5 ? "initial" : "none" }}>
             <h1>Finished?</h1>
             <p>
               Make sure you have everything correct, then click submit below! We
