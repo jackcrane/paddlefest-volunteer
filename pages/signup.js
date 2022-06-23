@@ -48,10 +48,10 @@ const Page = (props) => {
     }
     if (
       [
-        waiverType == "Adult" || "Minor",
-        emergencyName.length > 0,
-        emergencyPhone.length > 0,
-        emergencyRelationship.length > 0,
+        waiver.waiverType == "Adult" || "Minor",
+        waiver.emergencyName.length > 0,
+        waiver.emergencyPhone.length > 0,
+        waiver.emergencyEmail.length > 0,
       ].some((x) => x === false)
     ) {
       alert("Please fill out all waiver fields");
