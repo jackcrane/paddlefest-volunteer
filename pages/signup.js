@@ -74,6 +74,12 @@ const Page = (props) => {
     setWorking(false);
     if (f.status === 200) {
       document.location.href = "/thanks";
+    } else if (f.status === 409) {
+      alert(
+        "Your email and name are already in our database. If you need to modify or would like to re-register, please contact info@ohioriverpaddlefest.org"
+      );
+    } else if (f.status === 411) {
+      alert("Shift not found. It may be full or an error has occured.");
     } else {
       alert("Something went wrong. Make sure everything is present!");
     }

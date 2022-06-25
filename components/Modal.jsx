@@ -15,6 +15,16 @@ const F = (props) => {
   );
 };
 
+const Checkbox = ({ checked }) => {
+  const [checkedState, setCheckedState] = useState(checked);
+  const handleChange = () => {
+    setCheckedState(!checkedState);
+  };
+  return (
+    <input type="checkbox" checked={checkedState} onChange={handleChange} />
+  );
+};
+
 const switchForLocation = (location) => {
   switch (location) {
     case "expo":
@@ -227,6 +237,22 @@ const Shifts = (props) => {
     })();
   };
 
+  const setLeader = (state) => {
+    (async () => {
+      await fetch(`https://paddlefestbackend.jackcrane.rocks/set-leader`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          volunteer: state.volunteer,
+          state,
+        }),
+      });
+      props.forceUpdate();
+    })();
+  };
+
   return (
     <div className={styles.shifts}>
       {shifts.map((shift, i) => (
@@ -417,6 +443,12 @@ const Modal = ({ open, onClose, _id }) => {
                           }}
                         />
                         <p style={{ margin: 0 }}>{changeSaved}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Leadership Team</td>
+                      <td>
+                        <Checkbox checked={volunteer.leadership} />
                       </td>
                     </tr>
                   </tbody>
