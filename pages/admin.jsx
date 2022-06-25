@@ -26,6 +26,18 @@ const F = (props) => {
 };
 
 const Admin = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const tok = localStorage.getItem("token");
+    if (!tok || tok !== "Paddlefest2022!!") {
+      // console.log(localStorage.getItem("token"));
+      setLoggedIn(false);
+    } else {
+      setLoggedIn(true);
+    }
+  }, []);
+
   const [volunteers, setVolunteers] = useState([]);
   const [updateTick, setUpdateTick] = useState(0);
   useEffect(() => {
@@ -75,6 +87,25 @@ const Admin = () => {
       );
     }
   };
+
+  if (!loggedIn) {
+    return (
+      <div className={styles.admin}>
+        <h1>You are not logged in!</h1>
+        <Input
+          placeholder="Enter the password"
+          onInput={(v) => {
+            console.log(v);
+            if (v === "Paddlefest2022!!") {
+              setLoggedIn(true);
+              localStorage.setItem("token", "Paddlefest2022!!");
+              console.log("in");
+            }
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
