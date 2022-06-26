@@ -82,6 +82,7 @@ const Page = (props) => {
       alert("Shift not found. It may be full or an error has occured.");
     } else {
       alert("Something went wrong. Make sure everything is present!");
+      throw new Error(f);
     }
   };
 
