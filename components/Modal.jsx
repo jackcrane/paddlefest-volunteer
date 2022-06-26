@@ -2,30 +2,12 @@ import styles from "../styles/Modal.module.scss";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import { ExternalLink } from "tabler-icons-react";
-import moment from "moment";
-import classNames from "classnames";
+import Input from "./Input";
+import { F } from "./F";
+import { Checkbox } from "./Checkbox";
+import { Locs } from "./admin/Locs";
 
-const F = (props) => {
-  return (
-    <div
-      style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-    >
-      {props.children}
-    </div>
-  );
-};
-
-const Checkbox = ({ checked }) => {
-  const [checkedState, setCheckedState] = useState(checked);
-  const handleChange = () => {
-    setCheckedState(!checkedState);
-  };
-  return (
-    <input type="checkbox" checked={checkedState} onChange={handleChange} />
-  );
-};
-
-const switchForLocation = (location) => {
+export const switchForLocation = (location) => {
   switch (location) {
     case "expo":
       return "Outdoors for All Expo";
@@ -45,257 +27,6 @@ const switchForLocation = (location) => {
     default:
       return location;
   }
-};
-
-const Locs = ({ volunteer, jobs, forceUpdate }) => {
-  // Locations
-
-  return (
-    <>
-      {Object.keys(jobs).map((loc, i) => {
-        return (
-          <details key={i}>
-            <summary>{switchForLocation(loc)}</summary>
-            {Object.keys(jobs[loc]).map((job, i) => (
-              <Job
-                volunteer={volunteer}
-                key={i}
-                job={job}
-                forceUpdate={forceUpdate}
-              />
-            ))}
-          </details>
-        );
-      })}
-    </>
-  );
-};
-
-const Job = (props) => {
-  const [job, setJob] = useState(null);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      console.log(props.job);
-      let f = await fetch(
-        `https://paddlefestbackend.jackcrane.rocks/jobs/exchange/job/${props.job}`
-      );
-      let job = await f.json();
-      setJob(job);
-      setLoading(false);
-    })();
-  }, [props.job]);
-  if (loading) {
-    return <span>Loading...</span>;
-  }
-  return (
-    <details className={styles.jobTitle}>
-      <summary>{job.title}</summary>
-      <div className={styles.jobLocation}>
-        <F></F>
-        <Shifts
-          job={job._id}
-          volunteer={props.volunteer}
-          forceUpdate={props.forceUpdate}
-        />
-      </div>
-    </details>
-  );
-};
-
-const VolunteerForName = (props) => {
-  const [volunteer, setVolunteer] = useState(null);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      let f = await fetch(
-        `https://paddlefestbackend.jackcrane.rocks/volunteer/${props.volunteer}`
-      );
-      let volunteer = await f.json();
-
-      setVolunteer(volunteer);
-      setLoading(false);
-    })();
-  }, [props.volunteer]);
-  if (loading) {
-    return <span>Loading...</span>;
-  }
-  return (
-    <div className={styles.volunteerName}>
-      <F>{volunteer.name}</F>
-    </div>
-  );
-};
-
-const ShiftOption = ({ shift, volunteer, forceUpdate }) => {
-  const submit = async () => {
-    let f = await fetch(`https://paddlefestbackend.jackcrane.rocks/add-shift`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        shift: shift._id,
-        volunteer: volunteer,
-      }),
-    });
-    if (f.status === 200) {
-      alert("Shift added!");
-      forceUpdate();
-    }
-  };
-
-  return (
-    <div
-      className={classNames(
-        styles.shift,
-        shift.volunteers.includes(volunteer) ? styles.disabled : undefined
-      )}
-      onClick={submit}
-    >
-      <p>
-        {moment(shift.start).format("h:mm a")} -{" "}
-        {moment(shift.end).format("h:mm a")}
-      </p>
-    </div>
-  );
-};
-
-const AvailibleShifts = (props) => {
-  const [shifts, setShifts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      let f = await fetch(
-        `https://paddlefestbackend.jackcrane.rocks/jobs/exchange/job/${props.job}`
-      );
-      let shifts = await f.json();
-      setShifts(shifts.shifts);
-      setLoading(false);
-    })();
-  }, [props.volunteer]);
-  if (loading) {
-    return <span>Loading...</span>;
-  }
-  return (
-    <div className={styles.addShifts}>
-      {shifts.map((shift, i) => (
-        <ShiftOption
-          key={i}
-          volunteer={props.volunteer}
-          shift={shift}
-          forceUpdate={props.forceUpdate}
-        />
-      ))}
-    </div>
-  );
-};
-
-const Shifts = (props) => {
-  const [shifts, setShifts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      let f = await fetch(
-        `https://paddlefestbackend.jackcrane.rocks/shifts/${props.volunteer}/${props.job}`
-      );
-      let shifts = await f.json();
-      setShifts(shifts);
-      setLoading(false);
-    })();
-  }, [props.volunteer, props.job]);
-  if (loading) {
-    return <span>Loading...</span>;
-  }
-
-  const leaveShift = (shift) => {
-    (async () => {
-      if (
-        window.confirm(
-          "Are you sure you want to remove this shift from this volunteer?"
-        )
-      ) {
-        console.log(shift);
-        let f = await fetch(
-          `https://paddlefestbackend.jackcrane.rocks/remove-shift`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              shift: shift._id,
-              volunteer: props.volunteer,
-            }),
-          }
-        );
-        if (f.status === 200) {
-          alert("Shift has been removed from this volunteer.");
-          props.forceUpdate();
-        }
-      }
-    })();
-  };
-
-  const setLeader = (state) => {
-    (async () => {
-      await fetch(`https://paddlefestbackend.jackcrane.rocks/set-leader`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          volunteer: state.volunteer,
-          state,
-        }),
-      });
-      props.forceUpdate();
-    })();
-  };
-
-  return (
-    <div className={styles.shifts}>
-      {shifts.map((shift, i) => (
-        <div className={styles.shift} key={i}>
-          <h3>Shift {i + 1}</h3>
-          <table>
-            <tbody>
-              <tr>
-                <td>Start</td>
-                <td>{moment(shift.start).format("hh:mm a")}</td>
-              </tr>
-              <tr>
-                <td>End</td>
-                <td>{moment(shift.end).format("hh:mm a")}</td>
-              </tr>
-              <tr>
-                <td>Other volunteers</td>
-                <td>
-                  {shift.volunteers.map(
-                    (volunteer, i) =>
-                      volunteer !== props.volunteer && (
-                        <VolunteerForName key={i} volunteer={volunteer} />
-                      )
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className={styles.options}>
-            <button onClick={() => leaveShift(shift)} className={styles.remove}>
-              Leave this shift
-            </button>
-          </div>
-        </div>
-      ))}
-      <h3>Add a new shift</h3>
-      <AvailibleShifts
-        volunteer={props.volunteer}
-        job={props.job}
-        forceUpdate={props.forceUpdate}
-      />
-    </div>
-  );
 };
 
 const Modal = ({ open, onClose, _id }) => {
@@ -368,6 +99,56 @@ const Modal = ({ open, onClose, _id }) => {
     } else {
       setChangeSaved("Error saving changes");
     }
+  };
+
+  const setLeader = async (state) => {
+    let f = await fetch(
+      `https://paddlefestbackend.jackcrane.rocks/set-leader`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id,
+          state,
+        }),
+      }
+    );
+    if (f.status === 200) {
+    } else {
+      alert(
+        `There has been an error (${f.status}) setting the leadership state. Please let Jack know that "error ${f.status} happened"`
+      );
+    }
+  };
+
+  const updateAOR = (aor) => {
+    (async () => {
+      let f = await fetch(
+        `https://paddlefestbackend.jackcrane.rocks/set-area-of-responsibility`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            _id,
+            areaOfResponsibility: aor,
+          }),
+        }
+      );
+      if (f.status === 200) {
+        setVolunteer({
+          ...volunteer,
+          areaOfResponsibility: aor,
+        });
+      } else {
+        alert(
+          `There has been an error setting the AOR. Please let Jack know that "error ${f.status} happened"`
+        );
+      }
+    })();
   };
 
   return open ? (
@@ -448,7 +229,32 @@ const Modal = ({ open, onClose, _id }) => {
                     <tr>
                       <td>Leadership Team</td>
                       <td>
-                        <Checkbox checked={volunteer.leadership} />
+                        <Checkbox
+                          checked={volunteer.leader}
+                          onInput={(state) => setLeader(state)}
+                        />
+                      </td>
+                    </tr>
+                    {volunteer.leader && (
+                      <tr>
+                        <td>Area of Responsibility</td>
+                        <td>
+                          {volunteer.areaOfResponsibility ||
+                            "This volunteer has not yet been assigned an area of responsibility"}
+                          <Input
+                            placeholder="Change area of responsibility"
+                            onInput={updateAOR}
+                          />
+                        </td>
+                      </tr>
+                    )}
+                    <tr>
+                      <td>Debug</td>
+                      <td>
+                        <details>
+                          <summary>Click to show debug data</summary>
+                          <code>{JSON.stringify(volunteer)}</code>
+                        </details>
                       </td>
                     </tr>
                   </tbody>

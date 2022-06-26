@@ -4,16 +4,8 @@ import Loader from "./Loader";
 import { ExternalLink } from "tabler-icons-react";
 import moment from "moment";
 import classNames from "classnames";
-
-const F = (props) => {
-  return (
-    <div
-      style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-    >
-      {props.children}
-    </div>
-  );
-};
+import { F } from "./F";
+import { VolunteerForName } from "./admin/VolunteerForName";
 
 const switchForLocation = (location) => {
   switch (location) {
@@ -35,32 +27,6 @@ const switchForLocation = (location) => {
     default:
       return location;
   }
-};
-
-const VolunteerForName = (props) => {
-  const [volunteer, setVolunteer] = useState(null);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      let f = await fetch(
-        `https://paddlefestbackend.jackcrane.rocks/volunteer/${props.volunteer}`
-      );
-      let volunteer = await f.json();
-
-      setVolunteer(volunteer);
-      setLoading(false);
-    })();
-  }, [props.volunteer]);
-  if (loading) {
-    return <span>Loading...</span>;
-  }
-  return (
-    <div className={styles.volunteerName}>
-      <F>
-        {props.email && props.email === true ? volunteer.email : volunteer.name}
-      </F>
-    </div>
-  );
 };
 
 const JobModal = ({ open, onClose, _id, openVolunteer }) => {

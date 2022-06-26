@@ -124,6 +124,16 @@ const Admin = () => {
         <div className={styles.navs}>
           <button onClick={() => setPage(1)}>Volunteers</button>
           <button onClick={() => setPage(2)}>Jobs</button>
+          <button
+            onClick={() =>
+              window.open(
+                "https://paddlefestbackend.jackcrane.rocks/export",
+                "_blank"
+              )
+            }
+          >
+            Export Records
+          </button>
         </div>
         <Input
           type="text"
