@@ -29,7 +29,13 @@ const switchForLocation = (location) => {
   }
 };
 
-const JobModal = ({ open, onClose, _id, openVolunteer }) => {
+const JobModal = ({
+  open,
+  onClose,
+  _id,
+  openVolunteer,
+  incrementFetchCount,
+}) => {
   const [working, setWorking] = useState(true);
   const [job, setJob] = useState({});
 
@@ -42,6 +48,7 @@ const JobModal = ({ open, onClose, _id, openVolunteer }) => {
         let f = await fetch(
           `https://paddlefestbackend.jackcrane.rocks/jobs/exchange/job/${_id}`
         );
+        incrementFetchCount();
         let volunteer = await f.json();
         setJob(volunteer);
         await new Promise((r) => setTimeout(r, 500));
@@ -157,6 +164,7 @@ const JobModal = ({ open, onClose, _id, openVolunteer }) => {
                                     <VolunteerForName
                                       volunteer={volunteer}
                                       email={volunteerDisplayType === "email"}
+                                      incrementFetchCount={incrementFetchCount}
                                     />
                                     <ExternalLink
                                       height={18}

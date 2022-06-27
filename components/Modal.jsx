@@ -30,7 +30,7 @@ export const switchForLocation = (location) => {
   }
 };
 
-const Modal = ({ open, onClose, _id }) => {
+const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
   const [working, setWorking] = useState(true);
   const [volunteer, setVolunteer] = useState({});
 
@@ -42,6 +42,7 @@ const Modal = ({ open, onClose, _id }) => {
       let f = await fetch(
         `https://paddlefestbackend.jackcrane.rocks/volunteer/${_id}`
       );
+      incrementFetchCount();
       let volunteer = await f.json();
       setVolunteer(volunteer);
       await new Promise((r) => setTimeout(r, 500));
@@ -68,6 +69,7 @@ const Modal = ({ open, onClose, _id }) => {
             }),
           }
         );
+        incrementFetchCount();
         if (f.status === 200) {
           alert("Volunteer has been deleted.");
           onClose();
@@ -95,6 +97,7 @@ const Modal = ({ open, onClose, _id }) => {
         }),
       }
     );
+    incrementFetchCount();
     if (f.status === 200) {
       setChangeSaved("Changes saved");
     } else {
@@ -116,6 +119,7 @@ const Modal = ({ open, onClose, _id }) => {
         }),
       }
     );
+    incrementFetchCount();
     if (f.status === 200) {
     } else {
       alert(
@@ -139,6 +143,7 @@ const Modal = ({ open, onClose, _id }) => {
           }),
         }
       );
+      incrementFetchCount();
       if (f.status === 200) {
         setVolunteer({
           ...volunteer,

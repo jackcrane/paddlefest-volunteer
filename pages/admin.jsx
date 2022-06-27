@@ -28,6 +28,8 @@ const F = (props) => {
 const Admin = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const [webRequestCount, setWebRequestCount] = useState(0);
+
   useEffect(() => {
     const tok = localStorage.getItem("token");
     if (!tok || tok !== "Paddlefest2022!!") {
@@ -41,10 +43,12 @@ const Admin = () => {
   const [volunteers, setVolunteers] = useState([]);
   const [updateTick, setUpdateTick] = useState(0);
   useEffect(() => {
+    console.log("Fetching new info");
     (async () => {
       let f = await fetch(
         "https://paddlefestbackend.jackcrane.rocks/volunteers"
       );
+      setWebRequestCount(webRequestCount + 1);
       let volunteers = await f.json();
       setVolunteers(volunteers);
       console.log("Volunteers updated");
@@ -53,7 +57,8 @@ const Admin = () => {
 
   useEffect(() => {
     const si = setInterval(() => {
-      setUpdateTick(updateTick + 1);
+      setUpdateTick((updateTick) => updateTick + 1);
+      console.log("Set update tick", updateTick);
     }, 1000);
     return () => clearInterval(si);
   }, []);
@@ -67,6 +72,7 @@ const Admin = () => {
   useEffect(() => {
     (async () => {
       let f = await fetch(`https://paddlefestbackend.jackcrane.rocks/jobs`);
+      setWebRequestCount(webRequestCount + 1);
       let jobs = await f.json();
       setJobs(jobs);
       console.log("Jobs updated");
@@ -107,9 +113,18 @@ const Admin = () => {
     );
   }
 
+  const incrementFetchCount = () => {
+    setWebRequestCount((webRequestCount) => webRequestCount + 1);
+  };
+
   return (
     <div className={styles.container}>
-      <Modal open={modalOpen} onClose={() => setModalOpen(false)} _id={modal} />
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        _id={modal}
+        incrementFetchCount={incrementFetchCount}
+      />
       <JobModal
         open={jobModalOpen}
         onClose={() => setJobModalOpen(false)}
@@ -118,6 +133,7 @@ const Admin = () => {
           setModal(volunteer);
           setModalOpen(true);
         }}
+        incrementFetchCount={incrementFetchCount}
       />
       <nav>
         <h1>Volunteer Listing</h1>
@@ -206,6 +222,10 @@ const Admin = () => {
               ))}
             </tbody>
           </table>
+          <p>
+            Showing {filter.length > 0 ? RunFilter(volunteers).length : "all"}{" "}
+            of {volunteers.length} records.
+          </p>
           {filter.length > 0 && (
             <>
               <b>
@@ -254,11 +274,7 @@ const Admin = () => {
                   }}
                 >
                   <td>
-                    <F>
-                      {job.title}
-                      <br />
-                      {job._id}
-                    </F>
+                    <F>{job.title}</F>
                   </td>
                   <td>
                     <F>{job.location}</F>
@@ -273,7 +289,9 @@ const Admin = () => {
                             {shift.volunteers.length} / {shift.max}{" "}
                           </>
                           <ProgressBar
-                            width={(shift.volunteers.length / shift.max) * 100}
+                            width={Math.floor(
+                              (shift.volunteers.length / shift.max) * 100
+                            )}
                           />
                         </li>
                       ))}
@@ -283,6 +301,10 @@ const Admin = () => {
               ))}
             </tbody>
           </table>
+          <p>
+            Showing {filter.length > 0 ? RunFilter(jobs).length : "all"} of{" "}
+            {jobs.length} records.
+          </p>
           {filter.length > 0 && (
             <>
               <b>
@@ -294,6 +316,12 @@ const Admin = () => {
           )}
         </main>
       )}
+      <main>
+        <p>
+          Debug info: There have been {webRequestCount} web requests this
+          session.
+        </p>
+      </main>
     </div>
   );
 };

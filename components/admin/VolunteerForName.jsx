@@ -11,7 +11,7 @@ export const VolunteerForName = (props) => {
         `https://paddlefestbackend.jackcrane.rocks/volunteer/${props.volunteer}`
       );
       let volunteer = await f.json();
-
+      props.incrementFetchCount && props.incrementFetchCount();
       setVolunteer(volunteer);
       setLoading(false);
     })();
@@ -21,7 +21,7 @@ export const VolunteerForName = (props) => {
   }
   return (
     <div className={styles.volunteerName}>
-      <F>{volunteer.name}</F>
+      <F>{props.email ? volunteer.email : volunteer.name}</F>
     </div>
   );
 };
