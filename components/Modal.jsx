@@ -7,6 +7,7 @@ import { F } from "./F";
 import { Checkbox } from "./Checkbox";
 import { Locs } from "./admin/Locs";
 import moment from "moment";
+import ParsePhone from "./admin/ParsePhone";
 
 export const switchForLocation = (location) => {
   switch (location) {
@@ -195,7 +196,7 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
                       <td>Phone</td>
                       <td>
                         <F>
-                          {volunteer.phonenum}
+                          {ParsePhone(volunteer.phonenum)}
                           <a href={`tel:${volunteer.phonenum}`}>
                             <ExternalLink height={18} />
                           </a>
@@ -222,6 +223,7 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
                         <textarea
                           value={notes || ""}
                           onInput={handleNotesChange}
+                          placeholder="No notes yet"
                           style={{
                             width: "100%",
                             height: 100,
@@ -241,19 +243,33 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
                         />
                       </td>
                     </tr>
-                    {volunteer.leader && (
-                      <tr>
-                        <td>Area of Responsibility</td>
-                        <td>
-                          {volunteer.areaOfResponsibility ||
+                    <tr>
+                      <td>
+                        Area of Responsibility
+                        <br />
+                        (only use if volunteer is a leader)
+                      </td>
+                      <td>
+                        {/* {volunteer.areaOfResponsibility ||
                             "This volunteer has not yet been assigned an area of responsibility"}
                           <Input
                             placeholder="Change area of responsibility"
                             onInput={updateAOR}
-                          />
-                        </td>
-                      </tr>
-                    )}
+                          /> */}
+                        <textarea
+                          placeholder="This volunteer has not yet been assigned an area of responsibility. Enter it here."
+                          onInput={(t) => updateAOR(t.target.value)}
+                          style={{
+                            width: "100%",
+                            height: 50,
+                            fontFamily: "inherit",
+                            fontSize: 16,
+                          }}
+                        >
+                          {volunteer.areaOfResponsibility}
+                        </textarea>
+                      </td>
+                    </tr>
                     {volunteer.waiver ? (
                       <>
                         <tr>
@@ -281,7 +297,7 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
                           <td>
                             {volunteer.waiver.emergencyName}{" "}
                             <F>
-                              {volunteer.phonenum}
+                              {ParsePhone(volunteer.phonenum)}
                               <a href={`tel:${volunteer.phonenum}`}>
                                 <ExternalLink height={18} />
                               </a>
@@ -300,7 +316,9 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
                     ) : (
                       <tr>
                         <td>Waiver State</td>
-                        <td>UNSIGNED</td>
+                        <td style={{ backgroundColor: "red", color: "white" }}>
+                          UNSIGNED
+                        </td>
                       </tr>
                     )}
                     <tr>

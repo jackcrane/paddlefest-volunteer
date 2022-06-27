@@ -10,11 +10,13 @@ import {
   MoodSmile,
   Phone,
   Ticket,
+  UserExclamation,
 } from "tabler-icons-react";
 import Modal from "../components/Modal";
 import JobModal from "../components/JobModal";
 import moment from "moment";
 import ProgressBar from "../components/ProgressBar";
+import ParsePhone from "../components/admin/ParsePhone";
 const F = (props) => {
   return (
     <div
@@ -166,62 +168,84 @@ const Admin = () => {
             Here is a listing of every volunteer and their commitments and
             contact information. To modify a listing, click the volunteer's row.
           </p>
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  <F>
-                    Name <MoodSmile height={18} />
-                  </F>
-                </th>
-                <th>
-                  <F>
-                    Email <Mail height={18} />
-                  </F>
-                </th>
-                <th>
-                  <F>
-                    Phone <Phone height={18} />
-                  </F>
-                </th>
-                <th>
-                  <F>
-                    Jobs <ActivityHeartbeat height={18} />
-                  </F>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {RunFilter(volunteers).map((volunteer, i) => (
-                <tr
-                  key={i}
-                  onClick={() => {
-                    setModal(volunteer._id);
-                    setModalOpen(true);
-                  }}
-                >
-                  <td>{volunteer.name}</td>
-                  <td>
+          <div className={styles.tableParent}>
+            <table>
+              <thead>
+                <tr>
+                  <th>
                     <F>
-                      {volunteer.email}
-                      <a href={`mailto:${volunteer.email}`}>
-                        <ExternalLink height={18} />
-                      </a>
+                      Name <MoodSmile height={18} />
                     </F>
-                  </td>
-                  <td>
+                  </th>
+                  <th className={styles.hideOnSmall}>
                     <F>
-                      {volunteer.phonenum}
-                      <a href={`tel:${volunteer.phonenum}`}>
-                        <ExternalLink height={18} />
-                      </a>
+                      Email <Mail height={18} />
                     </F>
-                  </td>
-                  <td>Click here to open jobs</td>
+                  </th>
+                  <th>
+                    <F>
+                      Phone <Phone height={18} />
+                    </F>
+                  </th>
+                  <th className={styles.hideOnSmall}>
+                    <F>
+                      Jobs <ActivityHeartbeat height={18} />
+                    </F>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {RunFilter(volunteers).map((volunteer, i) => (
+                  <tr
+                    key={i}
+                    onClick={() => {
+                      setModal(volunteer._id);
+                      setModalOpen(true);
+                    }}
+                  >
+                    <td>
+                      <F>
+                        {volunteer.name}
+                        {!volunteer.waiver && (
+                          <span
+                            style={{
+                              border: "2px solid red",
+                              padding: 3,
+                              marginLeft: 5,
+                            }}
+                          >
+                            <F>
+                              <UserExclamation height={18} color="red" />
+                              No Waiver!
+                            </F>
+                          </span>
+                        )}
+                      </F>
+                    </td>
+                    <td className={styles.hideOnSmall}>
+                      <F>
+                        {volunteer.email}
+                        <a href={`mailto:${volunteer.email}`}>
+                          <ExternalLink height={18} />
+                        </a>
+                      </F>
+                    </td>
+                    <td>
+                      <F>
+                        {ParsePhone(volunteer.phonenum)}
+                        <a href={`tel:${volunteer.phonenum}`}>
+                          <ExternalLink height={18} />
+                        </a>
+                      </F>
+                    </td>
+                    <td className={styles.hideOnSmall}>
+                      Click here to open jobs
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <p>
             Showing {filter.length > 0 ? RunFilter(volunteers).length : "all"}{" "}
             of {volunteers.length} records.
@@ -243,64 +267,68 @@ const Admin = () => {
             Here is a listing of every job. Click a job to see its shifts and
             volunteers
           </p>
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  <F>
-                    Job Name <Id height={18} />
-                  </F>
-                </th>
-                <th>
-                  <F>
-                    Event <Ticket height={18} />
-                  </F>
-                </th>
-                <th>
-                  <F>
-                    Fill state
-                    <DropletFilled2 height={18} />
-                  </F>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {RunFilter(jobs).map((job, i) => (
-                <tr
-                  key={i}
-                  onClick={() => {
-                    setJobModal(job._id);
-                    setJobModalOpen(true);
-                  }}
-                >
-                  <td>
-                    <F>{job.title}</F>
-                  </td>
-                  <td>
-                    <F>{job.location}</F>
-                  </td>
-                  <td>
-                    <ul>
-                      {job.shifts.map((shift, i) => (
-                        <li key={i}>
-                          <>
-                            {moment(shift.start).format("h:mm a")} -{" "}
-                            {moment(shift.end).format("h:mm a")}:{" "}
-                            {shift.volunteers.length} / {shift.max}{" "}
-                          </>
-                          <ProgressBar
-                            width={Math.floor(
-                              (shift.volunteers.length / shift.max) * 100
-                            )}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </td>
+          <div className={styles.tableParent}>
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <F>
+                      Job Name <Id height={18} />
+                    </F>
+                  </th>
+                  <th className={styles.hideOnSmall}>
+                    <F>
+                      Event <Ticket height={18} />
+                    </F>
+                  </th>
+                  <th>
+                    <F>
+                      Fill state
+                      <DropletFilled2 height={18} />
+                    </F>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {RunFilter(jobs).map((job, i) => (
+                  <tr
+                    key={i}
+                    onClick={() => {
+                      setJobModal(job._id);
+                      setJobModalOpen(true);
+                    }}
+                  >
+                    <td>
+                      <F>{job.title}</F>
+                    </td>
+                    <td className={styles.hideOnSmall}>
+                      <F>{job.location}</F>
+                    </td>
+                    <td>
+                      <ul>
+                        {job.shifts.map((shift, i) => (
+                          <li key={i}>
+                            <>
+                              {moment(shift.start).format("h:mm a")} -{" "}
+                              {moment(shift.end).format("h:mm a")}:{" "}
+                              {shift.volunteers.length} / {shift.max}{" "}
+                            </>
+                            <div className={styles.hideOnSmall}>
+                              <ProgressBar
+                                width={Math.floor(
+                                  (shift.volunteers.length / shift.max) * 100
+                                )}
+                              />
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <p>
             Showing {filter.length > 0 ? RunFilter(jobs).length : "all"} of{" "}
             {jobs.length} records.

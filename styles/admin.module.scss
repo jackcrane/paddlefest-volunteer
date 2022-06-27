@@ -8,6 +8,9 @@ $blue: #3367ff;
     padding: 15px;
     align-items: center;
     justify-content: space-between;
+    @media screen and (max-width: 375px) {
+      flex-direction: column;
+    }
     * {
       margin: 0px;
     }
@@ -29,6 +32,14 @@ $blue: #3367ff;
   }
   main {
     padding: 15px;
+    .tableParent {
+      overflow: auto;
+    }
+    .hideOnSmall {
+      @media screen and (max-width: 600px) {
+        display: none;
+      }
+    }
     table {
       border-collapse: collapse;
       width: 100%;
@@ -57,6 +68,7 @@ $blue: #3367ff;
             }
             ul {
               margin: 5px;
+              padding: 0px;
               li {
                 display: flex;
                 justify-content: space-between;

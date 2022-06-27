@@ -15,7 +15,11 @@ $red: #fa1750;
   .modalContent {
     background: white;
     width: 80%;
-    height: 80%;
+    @media screen and (max-width: 600px) {
+      width: 95%;
+      margin-top: 20%;
+      height: 80%;
+    }
     border-radius: 10px;
     padding: 20px;
     display: flex;
