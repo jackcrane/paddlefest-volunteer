@@ -6,6 +6,7 @@ import Input from "./Input";
 import { F } from "./F";
 import { Checkbox } from "./Checkbox";
 import { Locs } from "./admin/Locs";
+import moment from "moment";
 
 export const switchForLocation = (location) => {
   switch (location) {
@@ -246,6 +247,55 @@ const Modal = ({ open, onClose, _id }) => {
                             onInput={updateAOR}
                           />
                         </td>
+                      </tr>
+                    )}
+                    {volunteer.waiver ? (
+                      <>
+                        <tr>
+                          <td>Waiver type</td>
+                          <td>{volunteer.waiver.waiverType}</td>
+                        </tr>
+                        {volunteer.waiver?.waiverType === "Minor" && (
+                          <>
+                            <tr>
+                              <td>Minor's DOB</td>
+                              <td>
+                                {new moment(volunteer.waiver.minorDob).format(
+                                  "MMMM Do YYYY (MM/DD/YYYY)"
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Parent's email</td>
+                              <td>{volunteer.waiver.parentEmail}</td>
+                            </tr>
+                          </>
+                        )}
+                        <tr>
+                          <td>Emergency Contact</td>
+                          <td>
+                            {volunteer.waiver.emergencyName}{" "}
+                            <F>
+                              {volunteer.phonenum}
+                              <a href={`tel:${volunteer.phonenum}`}>
+                                <ExternalLink height={18} />
+                              </a>
+                            </F>{" "}
+                            <F>
+                              {volunteer.waiver.emergencyEmail}
+                              <a
+                                href={`mailto:${volunteer.waiver.emergencyEmail}`}
+                              >
+                                <ExternalLink height={18} />
+                              </a>
+                            </F>{" "}
+                          </td>
+                        </tr>
+                      </>
+                    ) : (
+                      <tr>
+                        <td>Waiver State</td>
+                        <td>UNSIGNED</td>
                       </tr>
                     )}
                     <tr>
