@@ -52,7 +52,7 @@ const Admin = () => {
       );
       setWebRequestCount(webRequestCount + 1);
       let volunteers = await f.json();
-      setVolunteers(volunteers);
+      setVolunteers(volunteers.reverse());
       console.log("Volunteers updated");
     })();
   }, [updateTick]);
@@ -216,7 +216,9 @@ const Admin = () => {
                           >
                             <F>
                               <UserExclamation height={18} color="red" />
-                              No Waiver!
+                              <span className={styles.hideOnSmall}>
+                                No Waiver!
+                              </span>
                             </F>
                           </span>
                         )}
