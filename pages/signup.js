@@ -70,10 +70,12 @@ const Page = (props) => {
         waiver,
       }),
     });
-    let res = await f.json();
     setWorking(false);
+    console.log(f.status);
     if (f.status === 200) {
+      let res = await f.json();
       document.location.href = "/thanks";
+      alert("Success! Thank you!");
     } else if (f.status === 409) {
       alert(
         "Your email and name are already in our database. If you need to modify or would like to re-register, please contact info@ohioriverpaddlefest.org"
