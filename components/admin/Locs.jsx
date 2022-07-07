@@ -1,7 +1,8 @@
 import { switchForLocation } from "../Modal";
 import { Job } from "./Job";
+import styles from "../../styles/Modal.module.scss";
 
-export const Locs = ({ volunteer, jobs, forceUpdate }) => {
+export const Locs = ({ volunteer, jobs, forceUpdate, openJobSearch }) => {
   // Locations
   return (
     <>
@@ -20,6 +21,10 @@ export const Locs = ({ volunteer, jobs, forceUpdate }) => {
           </details>
         );
       })}
+      <br />
+      <button onClick={() => openJobSearch()} className={styles.bluebtn}>
+        Add a completely new shift
+      </button>
     </>
   );
 };
