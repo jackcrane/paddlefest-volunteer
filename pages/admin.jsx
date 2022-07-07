@@ -313,7 +313,7 @@ const Admin = () => {
                     <td>
                       <F>{job.title}</F>
                     </td>
-                    <td className={styles.hideOnSmall}>
+                    <td>
                       <F>{job.location}</F>
                     </td>
                     <td>
