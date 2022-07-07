@@ -38,11 +38,12 @@ const CreateJob = () => {
       shift.start = moment(
         `${switchForDate(location)} ${shift.start}`,
         "M/D HH:mm"
-      ).toISOString();
-      shift.end = moment(
-        `${switchForDate(location)} ${shift.end}`,
-        "M/D HH:mm"
-      ).toISOString();
+      )
+        .tz("America/New_York")
+        .toISOString();
+      shift.end = moment(`${switchForDate(location)} ${shift.end}`, "M/D HH:mm")
+        .tz("America/New_York")
+        .toISOString();
       return shift;
     });
     let f = await fetch(
