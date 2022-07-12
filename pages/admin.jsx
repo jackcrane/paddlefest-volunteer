@@ -152,14 +152,7 @@ const Admin = () => {
           >
             Export Records
           </button>
-          <button
-            onClick={() =>
-              window.open(
-                "https://paddlefestbackend.jackcrane.rocks/create-jobs",
-                "_blank"
-              )
-            }
-          >
+          <button onClick={() => window.open("/create-jobs", "_blank")}>
             Create a new job
           </button>
         </div>
