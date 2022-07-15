@@ -42,11 +42,12 @@ const Dates = (props) => {
 
   useEffect(() => {
     const newValues = [
-      outdoorsForAll && "expo",
+      outdoorsForAll && "outdoorsForAll",
       launch && "launch",
-      midPoint && "midpoint",
-      finishLine && "finishline",
-    ].filter((itm) => itm);
+      midPoint && "midPoint",
+      finishLine && "finishLine",
+    ].filter((v) => v);
+    console.log(newValues);
     setValues(newValues);
     props.setValues(newValues);
   }, [outdoorsForAll, launch, midPoint, finishLine]);
@@ -60,17 +61,19 @@ const Dates = (props) => {
         conflict timewise. (For example, you cannot volunteer at both the 4.5
         Mile Finish Line/Midpoint AND the Finish Line Festival because they
         happen simultaneously.) After selecting from the events below, you will
-        see available roles and shifts on the next page.
+        see available roles and shifts on the next page. Please note that
+        volunteer slots for Friday's Outdoors for All Expo are full and not
+        shown. Please contact us if you have any questions.
       </p>
       <div className={styles.options}>
-        <Option
+        {/* <Option
           checked={outdoorsForAll}
           onLocalChange={() => setOutdoorsForAll(!outdoorsForAll)}
         >
           <p>Friday night (August 5th)</p>
           <p className={styles.bigdate}>Outdoors for All Expo</p>
           <p>Schmidt Recreation Complex</p>
-        </Option>
+        </Option> */}
         <Option checked={launch} onLocalChange={() => setLaunch(!launch)}>
           <p>Saturday early morning (August 6th)</p>
           <p className={styles.bigdate}>Paddlefest Launch</p>

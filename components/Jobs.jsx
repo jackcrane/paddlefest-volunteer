@@ -92,12 +92,12 @@ const EventJobs = (props) => {
         setEvent("Launch");
         break;
       case "launch":
-        return "Launch";
+        setEvent("Launch");
         break;
       case "midpoint":
         setEvent("4.5 Mile Finish Line / Midpoint");
         break;
-      case "finishline":
+      case "finishLine":
         setEvent("Finish Line Festival");
         break;
       default:
@@ -110,7 +110,7 @@ const EventJobs = (props) => {
     setJobs([]);
     (async () => {
       let jfetch = await fetch(
-        `https://paddlefestbackend.jackcrane.rocks/list-jobs/${props.event}`
+        `https://paddlefestbackend.jackcrane.rocks/list-jobs/${props.event.toLowerCase()}`
       );
       if (jfetch.status !== 200) {
         alert(
@@ -136,11 +136,30 @@ const EventJobs = (props) => {
     props.handle(selectedJobs);
   }, [selectedJobs]);
 
+  const order = (d) => {
+    try {
+      const average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+      // Sort by the percentage of fill on each shift
+      d.sort((a, b) => {
+        let aFillStates = a.shifts.map((shift) => {
+          return shift.volunteers.length / shift.max;
+        });
+        let bFillStates = b.shifts.map((shift) => {
+          return shift.volunteers.length / shift.max;
+        });
+        return average(aFillStates) - average(bFillStates);
+      });
+    } catch (e) {}
+
+    return d;
+  };
+
   return (
     <div>
       <h2>{event}</h2>
       <div className={styles.jobList}>
-        {jobs.map((job, i) => (
+        {order(jobs).map((job, i) => (
           <Job key={i} job={job} handle={(d) => handle(d, job._id)} />
         ))}
       </div>
@@ -166,7 +185,8 @@ const Signup = (props) => {
       <p>
         First, select the role you want to have, then choose one or multiple
         shifts from the availible times that pop up. Jobs are automatically
-        filtered for the event you have selected.
+        filtered for the event you have selected and are ordered by the most
+        availible shifts.
       </p>
       {props.events.length === 0 && (
         <p>
