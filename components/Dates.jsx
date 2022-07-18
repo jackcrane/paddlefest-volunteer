@@ -66,14 +66,14 @@ const Dates = (props) => {
         shown. Please contact us if you have any questions.
       </p>
       <div className={styles.options}>
-        {/* <Option
+        <Option
           checked={outdoorsForAll}
           onLocalChange={() => setOutdoorsForAll(!outdoorsForAll)}
         >
           <p>Friday night (August 5th)</p>
           <p className={styles.bigdate}>Outdoors for All Expo</p>
           <p>Schmidt Recreation Complex</p>
-        </Option> */}
+        </Option>
         <Option checked={launch} onLocalChange={() => setLaunch(!launch)}>
           <p>Saturday early morning (August 6th)</p>
           <p className={styles.bigdate}>Paddlefest Launch</p>
