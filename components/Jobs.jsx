@@ -197,7 +197,7 @@ const Signup = (props) => {
         </p>
       )}
       {props.events.map((e, i) => (
-        <EventJobs key={i} event={e} handle={(d) => handle(d, e)} />
+        <EventJobs key={i} event={(() => e === 'outdoorsForAll' ? 'expo' : e)()} handle={(d) => handle(d, e)} />
       ))}
     </div>
   );
