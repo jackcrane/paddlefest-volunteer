@@ -175,6 +175,37 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
     console.log(f);
   };
 
+  const [ textGroup, setTextGroup ] = useState(volunteer.textGroup);
+
+  useEffect(() => {
+    setTextGroup(volunteer.textGroup);
+  }, [volunteer])
+
+  const [textGroups, setTextGroups] = useState([]);
+
+  const handleTextGroupChange = async (e) => {
+    setTextGroup(e.target.value);
+    await fetch('https://paddlefest-backend.jackcrane.rocks/set-text-group', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        _id,
+        textGroup: e.target.value,
+      }),
+    })
+  }
+
+  useEffect(() => {
+    (async () => {
+      let f = await fetch("https://paddlefest-backend.jackcrane.rocks/text-groups")
+      let textGroups = await f.json();
+      console.log(textGroups);
+      setTextGroups(textGroups);
+    })();
+  }, [updateTick])
+
   return open ? (
     <>
       <JobSearchModal
@@ -257,6 +288,18 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
                             }}
                           />
                           <p style={{ margin: 0 }}>{changeSaved}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Text Group</td>
+                        <td>
+                            Current text group: {textGroup ? textGroup : 'unset'} <br /><br />
+                            <input type="text" placeholder="Enter a text group" list="groups" onInput={handleTextGroupChange} />
+                            <datalist id="groups">
+                              {textGroups.map((group) => (
+                                group && <option key={group} value={group} />
+                              ))}
+                            </datalist>
                         </td>
                       </tr>
                       <tr>
