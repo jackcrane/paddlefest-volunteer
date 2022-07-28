@@ -185,7 +185,7 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
 
   const handleTextGroupChange = async (e) => {
     setTextGroup(e.target.value);
-    await fetch('https://paddlefest-backend.jackcrane.rocks/set-text-group', {
+    await fetch('https://paddlefestbackend.jackcrane.rocks/set-text-group', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ const Modal = ({ open, onClose, _id, incrementFetchCount }) => {
 
   useEffect(() => {
     (async () => {
-      let f = await fetch("https://paddlefest-backend.jackcrane.rocks/text-groups")
+      let f = await fetch("https://paddlefestbackend.jackcrane.rocks/text-groups")
       let textGroups = await f.json();
       console.log(textGroups);
       setTextGroups(textGroups);

@@ -12,8 +12,13 @@ export const VolunteerForName = (props) => {
       );
       let volunteer = await f.json();
       props.incrementFetchCount && props.incrementFetchCount();
-      setVolunteer(volunteer);
-      setLoading(false);
+      if(volunteer && volunteer.name) {
+        setVolunteer(volunteer);
+        setLoading(false);
+      } else {
+        setVolunteer(false)
+        setLoading(false)
+      }
     })();
   }, [props.volunteer]);
   if (loading) {
@@ -21,7 +26,7 @@ export const VolunteerForName = (props) => {
   }
   return (
     <div className={styles.volunteerName}>
-      <F>{props.email ? volunteer.email : volunteer.name}</F>
+      {volunteer && <F>{props.email ? volunteer.email : volunteer.name}</F>}
     </div>
   );
 };
